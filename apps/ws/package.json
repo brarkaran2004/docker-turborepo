@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/ws": "^8.18.1",
+    "db": "*",
     "typescript": "^5.9.3",
     "ws": "^8.19.0",
     "wss": "^3.3.4"

@@ -4,17 +4,17 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prisma": "6.19.2"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "dotenv": "^17.2.3",
-    "prisma": "^7.2.0"
+    "@prisma/client": "6.19.2",
+    "dotenv": "^17.2.3"
   },
-  "exports":{
-      "./client": "./src/index.ts"
-    }
-  
+  "exports": {
+    "./client": "./src/index.ts"
+  }
 }
