@@ -1,0 +1,11 @@
+FROM oven/bun:alpine
+
+WORKDIR /app
+
+
+COPY . .
+RUN bun install
+
+
+
+CMD ["sh","-c","bun run start:ws"]

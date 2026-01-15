@@ -1,14 +1,17 @@
 import express from "express";
 import { prismaClient } from "db/client";
+import cors from "cors"
 
 const app = express();
+app.use(cors()); 
 
 app.use(express.json());
 
 app.get("/users", (req, res) => {
+  
   prismaClient.user.findMany()
     .then(users => {
-      res.json(users);
+      return res.json(users);
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
@@ -26,15 +29,16 @@ app.post("/user", (req, res) => {
   prismaClient.user.create({
     data: {
       username,
-      password
+      password,
+      
     }
   })
     .then(user => {
-      res.status(201).json(user);
+      res.status(201).json({user,msg:"majha"});
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
     });
 })
 
-app.listen(3000);
+app.listen(3001);

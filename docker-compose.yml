@@ -1,0 +1,76 @@
+
+services:
+  postgres:
+    container_name: db
+    image: postgres:16
+    environment:
+      - POSTGRES_PASSWORD=mypass
+      - POSTGRES_USER=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+    restart: always
+
+  fe:
+    container_name: fe
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile.frontend
+    restart: always
+    volumes:
+      - .:/app
+      - fe_node:/app/node_modules
+    ports:
+      - "5173:5173"
+    networks:
+      - my_network
+    depends_on:
+      - be
+    command: sh -c "bun install && bun run start:fe"
+  be:
+      container_name: be
+      build:
+        context: .
+        dockerfile: ./docker/dockerfile.backend
+      restart: always
+      volumes:
+          - .:/app
+          - be_node:/app/node_modules
+      ports:
+        - "3001:3001"
+      networks:
+        - my_network
+      depends_on:
+        - postgres
+      command: sh -c "bun install && bun run start:http"
+  ws:
+        container_name: ws
+        build:
+          context: .
+          dockerfile: ./docker/dockerfile.ws
+        restart: always
+        volumes:
+          - .:/app
+          - ws_node:/app/node_modules
+
+        ports:
+          - "8080:8080"
+        networks:
+          - my_network
+        depends_on:
+          - postgres
+
+        command: sh -c "bun install && bun run start:ws"
+networks:
+    my_network:
+      driver: bridge
+
+volumes:
+  postgres-data:
+  be_node:
+  fe_node:
+  ws_node:
