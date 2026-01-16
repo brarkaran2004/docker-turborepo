@@ -4,6 +4,7 @@ WORKDIR /app
 
 
 COPY . .
+# currently not focusing on optimizing the files (just quickly wanted to deploy to ec2)
 RUN bun install
 
 CMD ["sh","-c","bun run start:fe"]

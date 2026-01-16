@@ -3,7 +3,8 @@ FROM oven/bun:alpine
 WORKDIR /app
 
 
-COPY . .
+COPY . . 
+# currently not focusing on optimizing the files (just quickly wanted to deploy to ec2)
 RUN bun install
 
 
