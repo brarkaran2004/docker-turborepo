@@ -1,0 +1,21 @@
+name: CD
+on:
+    push:
+        branches: [ main ]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: SSH to machine
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{secrets.SSH_HOST}}
+            username: ec2-user
+            key: ${{secrets.SSH_KEY}}
+            script: |
+                cd ~/turbo-docker
+                git pull
+                docker compose down 
+                docker compose -f docker-compose.prod.yml up --build
+
+
