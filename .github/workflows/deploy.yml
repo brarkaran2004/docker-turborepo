@@ -16,6 +16,7 @@ jobs:
                 cd ~/turbo-docker
                 git pull origin main
                 docker compose -f dockedown 
-                docker compose -f docker-compose.yml up --build
+                docker compose -f docker-compose.yml up -d --build
+                docker compose -f docker-compose.yml ps
 
 
